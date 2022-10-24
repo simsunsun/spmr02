@@ -87,7 +87,7 @@
 
   <joint name="right_wheel_joint" type="continuous">
     <origin
-      xyz="0 0.40407 0"
+      xyz="0 0.40407 -0.001"
       rpy="1.5708 0 -1.5708" />
     <parent link="base_link" />
     <child link="right_wheel_link" />
@@ -132,7 +132,7 @@
 
   <joint name="left_wheel_joint" type="continuous">
     <origin
-      xyz="0 -0.40407 0"
+      xyz="0 -0.40407 -0.001"
       rpy="1.5708 0 1.5708" />
     <parent link="base_link" />
     <child link="left_wheel_link" />
