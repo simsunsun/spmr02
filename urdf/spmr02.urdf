@@ -243,7 +243,7 @@
         <leftJoint>left_wheel_joint</leftJoint>
         <rightJoint>right_wheel_joint</rightJoint>
         <torque>200</torque>
-        <commandTopic>cmd_val</commandTopic>
+        <commandTopic>test_mr/cmd_val</commandTopic>
         <odometryTopic>/odom</odometryTopic>
         <odometryFrame>odom</odometryFrame>
         <rosDebugLevel>1</rosDebugLevel>
@@ -258,6 +258,13 @@
         <wheelSeparation>0.8</wheelSeparation>
         <wheelDiameter>0.265</wheelDiameter>
     </plugin>
+
+
+
+    
+
+
+
   </gazebo>
 
 </robot>
