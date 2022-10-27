@@ -1,37 +1,57 @@
 <launch>
 
-  <arg name="x_pos" default="1.0"/>
-  <arg name="y_pos" default="1.0"/>
-  <arg name="z_pos" default="1.0"/>
+      <arg name="x_pos" default="0.0"/>
+      <arg name="y_pos" default="0.0"/>
+      <arg name="z_pos" default="0.0"/>
 
-  <arg name="ticks_per_meter" value="76.433" />
-  <arg name="wheel_separation" value="0.566" />
-
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <!-- <arg name="world_name" value="$(find test_mr)/worlds/room.world"/> -->
-    <arg name="paused" value="false"/>
-    <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
-    <arg name="debug" value="false"/>
-  </include>  
+      <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <!-- <arg name="world_name" value="$(find test_mr)/worlds/room.world"/> -->
+            <arg name="paused" value="false"/>
+            <arg name="use_sim_time" value="true"/>
+            <arg name="gui" value="true"/>
+            <arg name="headless" value="false"/>
+            <arg name="debug" value="false"/>
+      </include>  
   
-  <node pkg="gazebo_ros" 
-        type="spawn_model" 
-        name="spawn_urdf" 
-        args="-urdf 
-              -model spmr02 
-              -x $(arg x_pos) 
-              -y $(arg y_pos) 
-              -z $(arg z_pos) 
-              -param robot_description" />
+      <node pkg="gazebo_ros" 
+              type="spawn_model" 
+            name="spawn_urdf" 
+            args="-urdf 
+                  -model spmr02 
+                  -x $(arg x_pos) 
+                  -y $(arg y_pos) 
+                  -z $(arg z_pos) 
+                  -param robot_description" />
 
-  <rosparam file="$(find spmr02)/config/controller_common.yaml" command="load"/>
-  <rosparam file="$(find spmr02)/config/pid.yaml"               command="load"/>
+      <rosparam file="$(find spmr02)/config/controller_common.yaml" command="load"/>
+      <rosparam file="$(find spmr02)/config/pid.yaml"               command="load"/>
 
-  <param name="robot_description" 
-         textfile="$(find spmr02)/urdf/spmr02.urdf" />
-  
+      <param name="robot_description" 
+             textfile="$(find spmr02)/urdf/spmr02.urdf" />
+
+      <!-- <node pkg="topic_tools" type="relay" name="b_scan_relay" args="b_scan scan"/>
+      <node pkg="topic_tools" type="relay" name="f_scan_relay" args="f_scan scan"/> -->
+
+      <!-- <node name="diff_drive_go_to_goal" pkg="diff_drive" type="diff_drive_go_to_goal" 
+            respawn="true" output="screen"/>   -->
+      <!-- <node name="diff_drive_controller" pkg="diff_drive" type="diff_drive_controller" 
+            respawn="true" output="screen"/>   -->
+      <!-- <node name="diff_drive_PathFind" pkg="diff_drive" type="diff_drive_PathFind" 
+            respawn="true" output="screen"/>   -->
+
+
+      <node name="sick_tim_5xx" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
+            <param name="scanner_type" type="string" value="sick_tim_5xx"/>
+            <param name="min_ang" type="double" value="-2.35619449" />
+            <param name="max_ang" type="double" value="2.35619449" />
+            <param name="intensity_resolution_16bit" type="bool" value="false" />
+            <param name="hostname" type="string" value="192.168.0.1" />
+            <param name="port" type="string" value="2112" />
+            <param name="timelimit" type="int" value="5" />   
+            </node>
+
+
+
   <!-- <node name="right_wheel_link_tf"
         pkg="tf"
         type="static_transform_publisher"
